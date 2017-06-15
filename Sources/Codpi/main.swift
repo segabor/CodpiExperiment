@@ -1,3 +1,5 @@
+import Foundation
+
 import odpi
 
 var gContext: UnsafeMutablePointer<dpiContext>?
@@ -28,24 +30,22 @@ if dpiContext_create(UInt32(DPI_MAJOR_VERSION), UInt32(DPI_MINOR_VERSION), &gCon
 // GetConnection()
 var conn : UnsafeMutablePointer<dpiConn>?
 
-let uname = "cust"
-let passwd = "cust"
+let uname = "CMS"
+let passwd = "CMS"
 // let connStr = "192.168.253.33:1521/DBEU16"
-let connStr = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.253.33)(PORT=1521))(CONNECT_DATA=(SID=DBEU16)))"
+let connStr = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.253.33)(PORT=1521))(CONNECT_DATA=(SID=DBEU02)))"
 
 var commonParams = dpiCommonCreateParams()
 // dpiContext_initCommonCreateParams(gContext, &commonParams)
 // var createParams = dpiConnCreateParams()
-
-
-let unamePtr : UnsafeBufferPointer<CChar>? = uname.utf8CString.withUnsafeBufferPointer { $0 }
-let passwdPtr : UnsafeBufferPointer<CChar>? = passwd.utf8CString.withUnsafeBufferPointer { $0 }
-let connStrPtr : UnsafeBufferPointer<CChar>? = connStr.utf8CString.withUnsafeBufferPointer { $0 }
+let c_uname = uname.cString(using: String.Encoding.utf8)
+let c_passwd = passwd.cString(using: String.Encoding.utf8)
+let c_conn = connStr.cString(using: String.Encoding.utf8)
 
 if dpiConn_create(gContext,
-    unamePtr!.baseAddress, UInt32(uname.characters.count),
-    passwdPtr!.baseAddress, UInt32(passwd.characters.count),
-    connStrPtr!.baseAddress, UInt32(connStr.characters.count),
+    c_uname!, UInt32(uname.characters.count),
+    c_passwd!, UInt32(passwd.characters.count),
+    c_conn!, UInt32(connStr.characters.count),
     &commonParams, nil, &conn) < 0 {
   showError(context: gContext!)
 }
