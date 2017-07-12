@@ -1,14 +1,19 @@
 import Foundation
 
+import Configuration
 import odpi
 
 var error = dpiErrorInfo()
 
 /// --- EFFECTIVE CODE STARTS HERE ---
 
-let uname = "CMS"
-let passwd = "CMS"
-let connStr = "<connection string>"
+let manager = ConfigurationManager()
+manager.load(file: "config.json", relativeFrom: .project)
+    .load(file: "config.json", relativeFrom: .executable)
+
+let uname = manager["database:username"] as! String
+let passwd = manager["database:password"] as! String
+let connStr = manager["database:connection"] as! String
 
 let connection = try! Connection(connection: connStr, username: uname, password: passwd)
 

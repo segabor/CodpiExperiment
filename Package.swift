@@ -7,5 +7,9 @@ let package = Package(
 
     targets: [
       Target(name: "Codpi", dependencies: ["odpi"])
+    ],
+
+    dependencies: [
+      .Package(url: "https://github.com/IBM-Swift/Configuration", majorVersion: 1)
     ]
 )
