@@ -15,25 +15,26 @@ public class Connection {
     internal let conn : OpaquePointer?
 
     public init(connection connStr: String, username uname: String, password passwd: String) throws {
-        
-        var commonParams = dpiCommonCreateParams()
-        // dpiContext_initCommonCreateParams(gContext, &commonParams)
-        // var createParams = dpiConnCreateParams()
-        let c_uname = uname.cString(using: String.Encoding.ascii)
-        let c_passwd = passwd.cString(using: String.Encoding.ascii)
-        let c_conn = connStr.cString(using: String.Encoding.ascii)
+        guard let c_uname = uname.cString(using: String.Encoding.ascii),
+            let c_passwd = passwd.cString(using: String.Encoding.ascii),
+            let c_conn = connStr.cString(using: String.Encoding.ascii),
 
+            let ctx = DriverContext.shared.context
+        else {
+            fatalError("Failed to initialize connection parameters")
+        }
+
+        var commonParams = dpiCommonCreateParams()
         var _conn : OpaquePointer?
-        let ctx: OpaquePointer? = DriverContext.shared.context
 
         if dpiConn_create(ctx,
-                          c_uname!, UInt32(uname.count),
-                          c_passwd!, UInt32(passwd.count),
-                          c_conn!, UInt32(connStr.count),
+                          c_uname, UInt32(c_uname.count-1),
+                          c_passwd, UInt32(c_passwd.count-1),
+                          c_conn, UInt32(c_conn.count-1),
                           &commonParams, nil, &_conn) < 0 {
-            throw DriverError.DatabaseInitFailed
+            die()
         }
-        
+
         conn = _conn
     }
 

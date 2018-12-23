@@ -9,6 +9,9 @@ import Foundation
 
 import Codpi
 
+// for easier debugging
+extension String: Error {}
+
 public struct DriverErrorInfo {
     let code : Int32 // ORA error code
     let offset : UInt16

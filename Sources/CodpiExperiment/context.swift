@@ -15,7 +15,7 @@ import Codpi
 //
 public final class DriverContext {
 
-    public var context: OpaquePointer?
+    internal var context: OpaquePointer?
 
     public static let shared = DriverContext()
 
@@ -23,7 +23,6 @@ public final class DriverContext {
         var errInfo = dpiErrorInfo()
 
         if dpiContext_create(UInt32(DPI_MAJOR_VERSION), UInt32(DPI_MINOR_VERSION), &context, &errInfo) < 0 {
-            // die(DriverErrorInfo(info: errInfo))
             let err = DriverErrorInfo(info: errInfo)
             fatalError("Failed to create global driver context; error=\(err.message)")
         }
