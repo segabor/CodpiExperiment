@@ -1,15 +1,18 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.2
 
 import PackageDescription
 
 let package = Package(
-    name: "Codpi",
-
-    targets: [
-      Target(name: "Codpi", dependencies: ["odpi"])
-    ],
+    name: "CodpiExperiment",
 
     dependencies: [
-      .Package(url: "https://github.com/IBM-Swift/Configuration", majorVersion: 1)
+        .package(url: "https://github.com/IBM-Swift/Configuration", from: "3.0.0")
+    ],
+
+    targets: [
+        .systemLibrary(name: "Codpi", providers: [
+            .brew(["odpi"])
+        ]),
+        .target(name: "CodpiExperiment", dependencies: ["Configuration", "Codpi"])
     ]
 )

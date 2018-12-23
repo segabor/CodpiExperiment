@@ -1,0 +1,5 @@
+module Codpi [system] {
+  header "/usr/local/include/dpi.h"
+  link "odpic"
+  export *
+}
