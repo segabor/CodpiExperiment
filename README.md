@@ -1,17 +1,21 @@
 An experiment to fetch some data from Oracle DB using ODPI-C thin API
 
-== Requirements
+Requirements
+------------
 
 - Oracle Instant Client
+- odpi (install with `brew install odpi`)
 - Swift 4.2 or newer
 
-== Build
+Build
+-----
 
 ```swift
 swift build -Xlinker -L/usr/local/lib
 ```
 
-== Run the example
+Run the example
+---------------
 
 Example expects connection parameters put into `config.json` file,
 
@@ -26,7 +30,7 @@ Example expects connection parameters put into `config.json` file,
 ```
 
 Copy / link `libclntsh.dylib` library isto `/usr/local/lib`.
-Now start the code
+Now start the code with the following command.
 
 ```swift
 swift run -Xlinker -L/usr/local/lib
