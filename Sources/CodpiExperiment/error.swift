@@ -14,7 +14,7 @@ extension String: Error {}
 
 public struct DriverErrorInfo {
     let code : Int32 // ORA error code
-    let offset : UInt16
+    let offset : UInt32
     let message : String // error message
     // let encoding : String
     let functionName : String

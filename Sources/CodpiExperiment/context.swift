@@ -22,7 +22,9 @@ public final class DriverContext {
     private init() {
         var errInfo = dpiErrorInfo()
 
-        if dpiContext_create(UInt32(DPI_MAJOR_VERSION), UInt32(DPI_MINOR_VERSION), &context, &errInfo) < 0 {
+        var params: UnsafeMutablePointer<dpiContextCreateParams>? = nil
+
+        if dpiContext_createWithParams(UInt32(DPI_MAJOR_VERSION), UInt32(DPI_MINOR_VERSION), params, &context, &errInfo) < 0 {
             let err = DriverErrorInfo(info: errInfo)
             fatalError("Failed to create global driver context; error=\(err.message)")
         }
