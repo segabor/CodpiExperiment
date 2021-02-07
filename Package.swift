@@ -6,7 +6,7 @@ let package = Package(
     name: "CodpiExperiment",
 
     dependencies: [
-        .package(url: "https://github.com/IBM-Swift/Configuration", from: "3.0.0")
+        .package(url: "https://github.com/Kitura/Configuration", from: "3.0.0")
     ],
 
     targets: [
